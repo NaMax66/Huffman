@@ -1,49 +1,50 @@
 ﻿using Huffman;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
-public class HuffmanTree
-//этот класс должен строить дерево на основании файла
-//для начала нужно определить частоту каждого символа
+public static class HuffmanTree
+//TODO: чтобы этот класс возвращал дерево со всеми уровнями
+
 {
-    List<char> _leaves;
-    public HuffmanTree()
+    public static List<NodeLevel> MakeTree(List<NodeLevel> freqList)
     {
-
+        return new List<NodeLevel>();
     }
 
-    public List<Node> makeTree(string fileName)
+    public static List<Node> MakeFreqList(string fileName)
     {
         List<Node> list = new List<Node>();
 
         using (StreamReader sr = File.OpenText(fileName))
         {
             string line;
-
+            int endLineValue = 0; //на случай если в исходном файле всего одна строка
             while ((line = sr.ReadLine()) != null)
             {
                 foreach (char item in line)
                 {
                     int value = 1;
-                    Node node = new Node(item, value);
+                    string latter = item.ToString();
 
-                    if (list.Contains(node))
+                    if (list.Exists(x => x.Symbol == latter))
                     {
-                        value = list.Find(x => x.Symbol == item).Value;
-                        list.Remove(node);
-                        value++;
-                        node = new Node(item, value);
+                        Node n = list.Find(x => x.Symbol == latter); //выражение в скобках символизирует принцып, по которому мы ищим
+                        value = ++n.Value;
+                        list.Remove(n);
                     }
-
-
-                    list.Add(node);
+                    list.Add(new Node(latter, value));
                 }
+                endLineValue++; //после прочтения линии добовляем символ новой строки
+            }
 
+            if (endLineValue != 0) //это добавляет символ конца строки в дерево.
+            {
+                Node nodeEndLine = new Node("\n", endLineValue - 1); //вычитаем еденицу, так как в последней строке нет переноса
+                list.Add(nodeEndLine);
             }
         }
-
-        return list;
+        return list.OrderBy(x => x.Value).ToList();
     }
 
-    public List<char> Leaves { get => _leaves; set => _leaves = value; }
 }
