@@ -16,7 +16,8 @@
         BranchZero = zero;
         BranchOne = one;
     }
-
     public NodeLevel BranchZero { get; set; }
     public NodeLevel BranchOne { get; set; }
+    public NodeLevel Parrent { get; set; }
+    public bool Flag { get; set; }
 }

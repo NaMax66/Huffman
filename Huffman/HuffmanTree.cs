@@ -38,6 +38,8 @@ public static class HuffmanTree
                 endLineValue++; //после прочтения линии добовляем символ новой строки
             }
 
+            endLineValue--; // после всех итераций удаляем один символ конца строки
+
             if (endLineValue != 0) //это добавляет символ конца строки в дерево.
             {
                 Node nodeEndLine = new Node("\n", endLineValue - 1); //вычитаем еденицу, так как в последней строке нет переноса
