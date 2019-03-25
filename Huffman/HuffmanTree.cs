@@ -29,7 +29,7 @@ public static class HuffmanTree
 
                     if (list.Exists(x => x.Symbol == latter))
                     {
-                        Node n = list.Find(x => x.Symbol == latter); //выражение в скобках символизирует принцып, по которому мы ищим
+                        Node n = list.Find(x => x.Symbol == latter); //выражение в скобках символизирует принцп, по которому мы ищим
                         value = ++n.Value;
                         list.Remove(n);
                     }

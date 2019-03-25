@@ -9,8 +9,7 @@ namespace Huffman
     {
         static void Main(string[] args)
         {
-            string fileName = "Роза.txt"; 
-
+            string fileName = "bigLog.txt";
 
 
             var charsInFile = HuffmanTree.MakeFreqList(fileName);
@@ -21,7 +20,9 @@ namespace Huffman
 
             makeLog(codeStruct);
 
-            
+            WriteFile(fileName, codeStruct);
+
+
 
 
             if (charsInFile.Count > 1)
@@ -29,13 +30,24 @@ namespace Huffman
                 Console.WriteLine($"В {tree.ToString()} {tree.Count} записей");
             }
 
-            WriteFreqList(fileName, "Leafs.txt");
+            WriteFreqList(charsInFile, "Leafs.txt");
+
+        }
+
+        static public void WriteFile(string fileName, List<SymbolCode> list)
+        {
+            byte a = 255;
+
+            //if fileName has a
+            // 011
+            //if < 8 00011
+            // a = 00110
 
         }
 
         private static void makeLog(List<SymbolCode> codeStruct)
         {
-            using(FileStream fs = File.Create($"logs/{DateTime.Now.ToFileTime()}.txt"))
+            using (FileStream fs = File.Create($"logs/{DateTime.Now.ToFileTime()}.txt"))
             {
                 foreach (SymbolCode s in codeStruct)
                 {
@@ -55,45 +67,26 @@ namespace Huffman
             fs.Write(info, 0, info.Length);
         }
 
-        private static void WriteFreqList(string sorceFile, string path)
+        private static void WriteFreqList(List<Node> list, string path)
         {
             //этот метод используется для тренеровки и он очень не эффективен. Если будет время - найти более эффективный способ.
 
-            string s = File.ReadAllText(sorceFile);
-            int leavs = 0;
-            string txt = "";
+            string s = "НЕ РЕАЛИЗОВАННО";
+            int leavs = list.Count;
+            long total = 0;
 
-            var charsInFile = HuffmanTree.MakeFreqList(sorceFile);
-            var tree = CodeMatch.MakeTree(charsInFile);
-
-            if (tree.Count > 1)
+            if (list.Count > 1)
             {
-                foreach (var node in tree)
+                foreach (var node in list)
                 {
-                    Console.WriteLine(node.Symbol + ":" + node.Value);
-                    txt += (node.Symbol + ":" + node.Value + "\r\n"); // \n не переводит строку в файле
-                    leavs++;
+                    total += node.Value;
                 }
-                txt = txt.Substring(0, txt.Length - 1); //удаляем последний перенос строки
-            }
-            else
-            {
-                txt = tree[0].Symbol;
-                Console.WriteLine(txt);
-                Console.WriteLine();
-                Console.WriteLine($"в окончательном элементе {tree[0].Symbol.Length} символов");
 
             }
-
-
-
-
-            File.WriteAllText(path, txt);
-
             Console.WriteLine("Колличество разных символов: " + leavs);
-            Console.WriteLine("Всего символов в файле: " + s.Length);
-            Console.WriteLine(charsInFile[0].Symbol + ":" + charsInFile[0].Value + " это первый элемент списка");
-            Console.WriteLine(charsInFile[charsInFile.Count - 1].Symbol + ":" + charsInFile[charsInFile.Count - 1].Value + " это последний элемент списка");
+            Console.WriteLine("Всего символов в файле: " + total);
+            Console.WriteLine(list[0].Symbol + ":" + list[0].Value + " это самый редкий редкий элемент в файле");
+            Console.WriteLine(list[list.Count - 1].Symbol + ":" + list[list.Count - 1].Value + " это самый частовстречающийся символ в файле");
 
             Console.WriteLine();
         }

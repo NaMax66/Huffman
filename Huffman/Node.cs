@@ -2,7 +2,7 @@
 {
     public class Node
     {
-        private string _symbol; //название символа
+        private string _symbol; //название символа //переделать
         private int _value; // колличество повторений в списке
 
         public Node()

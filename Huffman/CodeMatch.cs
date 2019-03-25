@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace Huffman
 {
@@ -118,6 +119,7 @@ namespace Huffman
     {
         private string symbol;
         private string byteCode;
+        
 
         public string Symbol { get => symbol; set => symbol = value; }
         public string ByteCode { get => byteCode; set => byteCode = value; }
